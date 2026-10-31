@@ -58,6 +58,23 @@ def handle_client(conn, addr):
                 if line == b"/quit":
                     conn.sendall(b"Goodbye!\n")
                     return
+                parts = line.decode(errors="replace").split(" ", 2)
+                if parts[0] == "/msg":
+                    if len(parts) < 3:
+                        conn.sendall(b"Use format: /msg name text\n")
+                        continue
+                    target, text = parts[1], parts[2]
+                    with lock:
+                        target_conn = clients.get(target)
+                    if target_conn is None:
+                        conn.sendall(f"{target} is not online\n".encode())
+                    else:
+                        try:
+                            target_conn.sendall(f"[private from {name}] {text}\n".encode())
+                            conn.sendall(f"[to {target}] {text}\n".encode())
+                        except OSError:
+                            pass
+                        continue
                 print("Received:", line)
                 broadcast(f"[{name}]".encode() + line + b"\n", name)
 
