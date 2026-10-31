@@ -3,13 +3,17 @@
 # print(line)
 # print(buffer)
 
-line = "/msg Ben "
-parts = line.split(" ", 2)
-#print(parts)
-if len(parts) < 3:
-    print("use: /msg name text")
-else:
-    print("to:", parts[1])
-    print("text:", parts[2])
+# line = "/msg Ben "
+# parts = line.split(" ", 2)
+# #print(parts)
+# if len(parts) < 3:
+#     print("use: /msg name text")
+# else:
+#     print("to:", parts[1])
+#     print("text:", parts[2])
 # print("/msg ben".split(" ", 2))
 # print("heiinn".split(" ", 2))
+
+
+names = ["bro", "sis", "anna"]
+print(", ".join(names))
